@@ -1,6 +1,7 @@
 Facebook Graph API interface
 ============================
 
+
 **This library is in it's infancy and should be used with caution.**
 
 
@@ -59,18 +60,18 @@ redundant requests if multiple users share the same school.
 
 Currently supported object types include:
 
-**FbUser** - Facebook users
-**FbGroup** - Facebook groups
-**FbEvent** - Facebook events
-**FbPage** - Facebook pages
-**FbLink** - Facebook links
-**FbPost** - Facebook posts (don't see many of these)
-**FbNote** - Facebook notes (don't see many of these)
-**FbStatus** - Facebook status messages
-**FbAlbum** - Facebook photo albums
-**FbPhoto** - Facebook photos
-**FbVideo** - Facebook videos
-**FbComment** - Facebook comments
++ **FbUser** - Facebook users
++ **FbGroup** - Facebook groups
++ **FbEvent** - Facebook events
++ **FbPage** - Facebook pages
++ **FbLink** - Facebook links
++ **FbPost** - Facebook posts (don't see many of these)
++ **FbNote** - Facebook notes (don't see many of these)
++ **FbStatus** - Facebook status messages
++ **FbAlbum** - Facebook photo albums
++ **FbPhoto** - Facebook photos
++ **FbVideo** - Facebook videos
++ **FbComment** - Facebook comments
 
 As I have said above, properties may be different at Facebook.  I have 
 incomplete information.  I hope this will change soon.
