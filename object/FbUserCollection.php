@@ -31,7 +31,7 @@ abstract class FbUserCollection extends FbSocialObject {
    * Set Facebook user collection owner / creator.
    */
   protected function setOwner($owner) {
-  	$this->owner = $this->create($owner);
+    $this->owner = $this->create($owner);
   }
 
   //----------------------------------------------------------------------------

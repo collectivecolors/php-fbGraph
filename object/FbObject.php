@@ -101,7 +101,7 @@ abstract class FbObject extends FbBase {
   protected function setLink($link) {
     $this->link = $link;
   }
-  
+
   /*****************************************************************************
    * Utilities
    */
@@ -112,7 +112,7 @@ abstract class FbObject extends FbBase {
    * This method should be overridden in all child object classes.
    */
   public function parse($data) {
-  	$this->_debug('parse()', $data);
+    $this->_debug('parse()', $data);
 
     if (is_array($data['metadata'])) {
       $this->setConnections($data['metadata']['connections']);

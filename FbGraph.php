@@ -4,20 +4,20 @@
  * Set up a package include structure.
  */
 function fb_graph_require($class, $type = '', $is_core = TRUE) {
-	// This is the only global variable.  I promise!
-	global $fb_graph_base_path;
+  // This is the only global variable.  I promise!
+  global $fb_graph_base_path;
 
-	$package_dir = (!$is_core && isset($fb_graph_base_path)
-    ? $fb_graph_base_path
-    : dirname(__FILE__)
+  $package_dir = (!$is_core && isset($fb_graph_base_path)
+  ? $fb_graph_base_path
+  : dirname(__FILE__)
   );
 
-	if (strlen($type)) {
+  if (strlen($type)) {
     require_once("$package_dir/$type/$class.php");
-	}
-	else {
-		require_once("$package_dir/$class.php");
-	}
+  }
+  else {
+    require_once("$package_dir/$class.php");
+  }
 }
 
 fb_graph_require('ICache', 'interface', TRUE);
@@ -53,14 +53,14 @@ class FbGraph extends LogObject {
    * Drupal for Facebook project.
    */
   public function requireFacebook($path = NULL) {
-  	if (is_null($path)) {
-    	// Check the package directory.
+    if (is_null($path)) {
+      // Check the package directory.
       require_once(dirname(__FILE__) . '/facebook.php');
     }
     else {
       require_once($path);
     }
-  	// Initialize the Facebook instance.
+    // Initialize the Facebook instance.
     $this->init();
   }
 
@@ -80,34 +80,34 @@ class FbGraph extends LogObject {
    */
   public function init($apikey = NULL, $app_secret = NULL) {
     $this->_debug('init()', $apikey, $app_secret);
-    
-  	if (!class_exists('Facebook')) {
+
+    if (!class_exists('Facebook')) {
       return; //throw new Exception('Facebook PHP SDK is required to access the Facebook Graph API.');
     }
     if (is_null($this->fb)) {
-    	// Make sure we have an API key.
-    	if (strlen($apikey)) {
-    	 $this->setApiKey($apikey);
-    	}
-    	elseif (!$this->getApiKey()) {
-    		throw new Exception('Facebook application API key is required to initiate a Graph API connection.');
-    	}
+      // Make sure we have an API key.
+      if (strlen($apikey)) {
+        $this->setApiKey($apikey);
+      }
+      elseif (!$this->getApiKey()) {
+        throw new Exception('Facebook application API key is required to initiate a Graph API connection.');
+      }
 
-    	// Make sure we have a application secret.
-    	if (strlen($app_secret)) {
-    	 $this->setAppSecret($app_secret);
-    	}
-    	elseif (!$this->getAppSecret()) {
+      // Make sure we have a application secret.
+      if (strlen($app_secret)) {
+        $this->setAppSecret($app_secret);
+      }
+      elseif (!$this->getAppSecret()) {
         throw new Exception('Facebook application secret is required to initiate a Graph API connection.');
-    	}
+      }
 
-    	// Get a new anonymous Facebook instance for this application.
+      // Get a new anonymous Facebook instance for this application.
       $this->fb = new Facebook(
-        array(
+      array(
           'appId'  => $this->getApiKey(),
           'secret' => $this->getAppSecret(),
           'cookie' => FALSE,
-      ));      
+      ));
       // Facebook doesn't seem to have valid certificates.
       Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = FALSE;
       Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYHOST] = FALSE;
@@ -139,12 +139,12 @@ class FbGraph extends LogObject {
    * This is in case we want to run these graph queries as authenticated users.
    */
   public function setFacebook($fb) {
-  	$this->fb     = $fb;
-  	$this->fb_alt = (is_null($fb) ? FALSE : TRUE);
+    $this->fb     = $fb;
+    $this->fb_alt = (is_null($fb) ? FALSE : TRUE);
 
-  	// Initialize the Facebook instance.
-  	$this->init();
-  	$this->getAccessToken(TRUE);
+    // Initialize the Facebook instance.
+    $this->init();
+    $this->getAccessToken(TRUE);
   }
 
   //----------------------------------------------------------------------------
@@ -154,19 +154,19 @@ class FbGraph extends LogObject {
    */
   protected $access_token;
 
-	/**
-	 * Get a public Facebook authorization token.
-	 */
+  /**
+   * Get a public Facebook authorization token.
+   */
   public function getAccessToken($reset = FALSE) {
-  	$this->_debug('getAccessToken()', $reset);
+    $this->_debug('getAccessToken()', $reset);
 
-  	// If an old access token exists and we don't want to reset
+    // If an old access token exists and we don't want to reset
     // then return the existing one.
     if (!$reset && $this->access_token) {
       $this->_debug('Already have access token:', $this->access_token);
       return $this->access_token;
     }
-  	if (!is_null($this->fb)) {
+    if (!is_null($this->fb)) {
       // We need a valid access token to connect (OAuth 2.0).
       if ($this->fb_alt && ($session = $this->fb->getSession())) {
         $this->_debug('Existing Facebook session:', $session);
@@ -174,9 +174,9 @@ class FbGraph extends LogObject {
       }
       else {
         $url = 'https://graph.facebook.com/oauth/access_token'
-             . '?client_id=' . $this->fb->getAppId()
-             . '&client_secret=' . $this->fb->getApiSecret()
-             . '&type=client_cred';
+        . '?client_id=' . $this->fb->getAppId()
+        . '&client_secret=' . $this->fb->getApiSecret()
+        . '&type=client_cred';
 
         $this->_debug('Url:', $url);
         $result = drupal_http_request($url);
@@ -190,7 +190,7 @@ class FbGraph extends LogObject {
         $this->access_token = $token;
       }
       $this->_debug('Final access token:', $this->access_token);
-  	}
+    }
     return $this->access_token;
   }
 
@@ -290,14 +290,14 @@ class FbGraph extends LogObject {
    * Get current parse depth for requests from this connector.
    */
   public function getDepth() {
-  	return $this->depth;
+    return $this->depth;
   }
 
   /**
    * Set parse depth for requests from this connector.
    */
   public function setDepth($depth) {
-  	$this->depth = $depth;
+    $this->depth = $depth;
   }
 
   /*****************************************************************************
@@ -337,12 +337,12 @@ class FbGraph extends LogObject {
    * Set cache delegate.
    */
   public function setCache(ICache $cache = NULL) {
-  	if (is_null($cache)) {
-  		$this->cache = new StaticCache();
-  	}
-  	else {
-  	  $this->cache = $cache;
-  	}
+    if (is_null($cache)) {
+      $this->cache = new StaticCache();
+    }
+    else {
+      $this->cache = $cache;
+    }
   }
 
   /**
@@ -360,7 +360,7 @@ class FbGraph extends LogObject {
    * This only represents the amount of time a brand new object would have.
    */
   public function getCacheLifetime() {
-  	return $this->cache_lifetime;
+    return $this->cache_lifetime;
   }
 
   /**
@@ -371,10 +371,10 @@ class FbGraph extends LogObject {
    * cache lifetimes.
    */
   public function getCacheExpiration() {
-  	if ($lifetime = $this->getCacheLifetime()) {
+    if ($lifetime = $this->getCacheLifetime()) {
       return time() + $lifetime; // Now plus number of seconds.
-  	}
-  	return NULL;
+    }
+    return NULL;
   }
 
   /**
@@ -383,7 +383,7 @@ class FbGraph extends LogObject {
    * This setting may be ignored by the cache class.
    */
   public function setCacheLifetime($seconds) {
-  	$this->cache_lifetime = $seconds;
+    $this->cache_lifetime = $seconds;
   }
 
   //----------------------------------------------------------------------------
@@ -392,27 +392,27 @@ class FbGraph extends LogObject {
    * Retrieve a Facebook Graph object or series of related objects.
    */
   public function request($id, $connection = '', $depth = NULL, $expire = NULL) {
-  	$this->_fdebug('request()', $id, $connection, $depth, $expire);
+    $this->_fdebug('request()', $id, $connection, $depth, $expire);
 
-  	static $calls = 0; // Debug
+    static $calls = 0; // Debug
     static $new = 0; // Debug
 
     $this->_debug('Requests: ' . ++$calls);
 
     if (!$id || is_null($this->fb)) {
-    	return NULL;
+      return NULL;
     }
 
-  	if (!$this->initialized) {
-  		$this->_error('Not initialized in FbGraph->request()');
-  		throw new Exception('FbGraph instance not initialized.  You need to call $obj->init() first.');
-  	}
-  	$request_id = $this->getRequestId($id, $connection);
-  	$this->_debug("Request id: $request_id");
+    if (!$this->initialized) {
+      $this->_error('Not initialized in FbGraph->request()');
+      throw new Exception('FbGraph instance not initialized.  You need to call $obj->init() first.');
+    }
+    $request_id = $this->getRequestId($id, $connection);
+    $this->_debug("Request id: $request_id");
 
-  	$object = $this->cache->get($request_id);
-  	if (is_null($object)) {
-  		$this->_debug('No cached object.');
+    $object = $this->cache->get($request_id);
+    if (is_null($object)) {
+      $this->_debug('No cached object.');
       $params = array('access_token' => $this->getAccessToken());
 
       if (strlen($connection)) {
@@ -430,10 +430,10 @@ class FbGraph extends LogObject {
 
       $this->_debug('Caching object...', $object, $expire);
       $this->cache->add($request_id, $object, $expire); // Cache in native format.
-  	}
+    }
 
-  	$this->_fdebug('Returning object...', $object);
-  	return $this->parseObject($object, $depth); // TODO: Figure out some cache system for object classes?
+    $this->_fdebug('Returning object...', $object);
+    return $this->parseObject($object, $depth); // TODO: Figure out some cache system for object classes?
   }
 
   //----------------------------------------------------------------------------
@@ -451,31 +451,31 @@ class FbGraph extends LogObject {
    * Supported search types.
    */
   protected $supported_types = array(
-    self::SEARCH_TYPE_POST => 'Posts',
-    self::SEARCH_TYPE_USER => 'Users',
-    self::SEARCH_TYPE_GROUP => 'Groups',
-    self::SEARCH_TYPE_PAGE => 'Pages',
-    self::SEARCH_TYPE_EVENT => 'Events',
+  self::SEARCH_TYPE_POST => 'Posts',
+  self::SEARCH_TYPE_USER => 'Users',
+  self::SEARCH_TYPE_GROUP => 'Groups',
+  self::SEARCH_TYPE_PAGE => 'Pages',
+  self::SEARCH_TYPE_EVENT => 'Events',
   );
 
   /**
    * Return supported Facebook search types.
    */
   public function getSearchTypes() {
-  	return $this->supported_types;
+    return $this->supported_types;
   }
 
   /**
    * Retrieve Facebook object ids based on search criteria.
    */
   public function search($query, $type = self::SEARCH_TYPE_USER, $limit = NULL, $offset = NULL, $depth = NULL, $expire = NULL) {
-  	$this->_fdebug('search()', $query, $type, $limit, $offset, $depth, $expire);
+    $this->_fdebug('search()', $query, $type, $limit, $offset, $depth, $expire);
 
     if (is_null($this->fb)) {
       return NULL;
     }
-  	if (!$this->initialized) {
-  		$this->_error('Not initialized in FbGraph->search()');
+    if (!$this->initialized) {
+      $this->_error('Not initialized in FbGraph->search()');
       throw new Exception('FbGraph instance not initialized.  You need to call $obj->init() first.');
     }
 
@@ -488,13 +488,13 @@ class FbGraph extends LogObject {
       $params['type'] = $type;
     }
     if (is_int($limit) && $limit > 0) {
-    	$params['limit'] = $limit;
+      $params['limit'] = $limit;
     }
     if (is_int($offset) && $offset > 0) {
-    	$params['offset'] = $offset;
+      $params['offset'] = $offset;
     }
 
-  	$url = url($this->getSearchUrl(), array(
+    $url = url($this->getSearchUrl(), array(
       'query' => $params,
     ));
     $this->_debug('Search location:', $this->getSearchUrl(), $params, $url);
@@ -503,12 +503,12 @@ class FbGraph extends LogObject {
     $this->_debug('HTTP search response:', $http);
 
     if ($http->data) {
-    	$data = json_decode($http->data, TRUE);
+      $data = json_decode($http->data, TRUE);
       $this->_fdebug('Decoded data:', $data);
 
       if (is_array($data)) {
         if (isset($data['error_code'])) {
-        	$this->_error('We got error code ' . $data['error_code'] . ' from Facebook search.');
+          $this->_error('We got error code ' . $data['error_code'] . ' from Facebook search.');
           throw new FacebookApiException($data);
         }
       }
@@ -549,27 +549,27 @@ class FbGraph extends LogObject {
    *  - FbVideo
    */
   protected function parseObject($data, $depth = NULL) {
-  	$this->_debug('parseObject()', $data, $depth);
+    $this->_debug('parseObject()', $data, $depth);
 
-  	if (is_null($depth)) {
-  		$depth = $this->getDepth();
-  	}
-  	$this->_debug("Depth: $depth");
+    if (is_null($depth)) {
+      $depth = $this->getDepth();
+    }
+    $this->_debug("Depth: $depth");
 
-  	// Check to see if we have multiple items.
-  	if (!isset($data['id']) && is_array($data['data'])) {
-  		$this->_debug('Parsing a list...');
-  		return $this->parseList($data, $depth);
-  	}
-  	// We "should" have a single object to parse now.
+    // Check to see if we have multiple items.
+    if (!isset($data['id']) && is_array($data['data'])) {
+      $this->_debug('Parsing a list...');
+      return $this->parseList($data, $depth);
+    }
+    // We "should" have a single object to parse now.
 
-  	// We may have a custom class for this object.
-  	if ($data['type'] && ($class = $this->getObjectClass($data['type']))) {
-  		$this->_debug('Returning new class...', $class, $depth);
+    // We may have a custom class for this object.
+    if ($data['type'] && ($class = $this->getObjectClass($data['type']))) {
+      $this->_debug('Returning new class...', $class, $depth);
       return new $class($data, $this, $depth);
-  	}
-  	// If all else fails, just leave it.
-  	$this->_debug('Returning data...', $data);
+    }
+    // If all else fails, just leave it.
+    $this->_debug('Returning data...', $data);
     return $data;
   }
 
@@ -579,20 +579,20 @@ class FbGraph extends LogObject {
    * For supported classes, see parseObject() comments.
    */
   protected function parseList($data, $depth = NULL) {
-  	$this->_debug('parseList()', $data, $depth);
+    $this->_debug('parseList()', $data, $depth);
 
-  	if (isset($data['data']) && is_array($data['data'])) {
-  		$list = array();
+    if (isset($data['data']) && is_array($data['data'])) {
+      $list = array();
 
-  		foreach ($data['data'] as $item) {
-  			$this->_debug('List item:', $item);
-  		  $list[] = $this->parseObject($item, $depth);
-  		}
-  		$this->_debug('Returning list...', $list);
-  		return $list;
-  	}
-  	// If all else fails, just leave it.
-  	$this->_debug('Returning data...', $data);
+      foreach ($data['data'] as $item) {
+        $this->_debug('List item:', $item);
+        $list[] = $this->parseObject($item, $depth);
+      }
+      $this->_debug('Returning list...', $list);
+      return $list;
+    }
+    // If all else fails, just leave it.
+    $this->_debug('Returning data...', $data);
     return $data;
   }
 
@@ -605,28 +605,28 @@ class FbGraph extends LogObject {
    *  - Facebook ID (what we really need to request objects)
    */
   protected function parseSearchResults($data, $depth = NULL, $expire = NULL) {
-  	$this->_debug('parseSearchResults()', $data, $depth);
+    $this->_debug('parseSearchResults()', $data, $depth);
 
-  	if (is_null($depth)) {
+    if (is_null($depth)) {
       $depth = $this->getDepth();
     }
     $this->_debug("Depth: $depth");
 
-  	if (isset($data['data']) && is_array($data['data'])) {
+    if (isset($data['data']) && is_array($data['data'])) {
       $list = array();
 
       foreach ($data['data'] as $item) {
-      	$this->_debug('Search result:', $item);
+        $this->_debug('Search result:', $item);
 
-      	// If we have depth set recurse into returned objects.
-      	if ($depth && array_key_exists('id', $item)) {
-      		$this->_debug('Requesting object...', $item['id']);
-      		$item = $this->request($item['id'], '', $depth, $expire);
-      		$this->_debug('Returned object:', $item);
-      	}
-      	else {
+        // If we have depth set recurse into returned objects.
+        if ($depth && array_key_exists('id', $item)) {
+          $this->_debug('Requesting object...', $item['id']);
+          $item = $this->request($item['id'], '', $depth, $expire);
+          $this->_debug('Returned object:', $item);
+        }
+        else {
           $item = $this->parseObject($item);
-      	}
+        }
         $list[] = $item;
       }
       $this->_debug('Returning list...', $list);
@@ -665,24 +665,24 @@ class FbGraph extends LogObject {
    * All calls for object classes should go through this method.
    */
   public function getObjectClass($type) {
-  	if (array_key_exists($type, $this->object_map)) {
-  		$class = $this->object_map[$type];
+    if (array_key_exists($type, $this->object_map)) {
+      $class = $this->object_map[$type];
 
-  		fb_graph_require($class, 'object');
-  		return $class;
-  	}
-  	return NULL;
+      fb_graph_require($class, 'object');
+      return $class;
+    }
+    return NULL;
   }
 
   /**
    * Check if a given object class exists in the object map.
    */
   public function checkObjectClass($class) {
-  	if (in_array($class, $this->object_map)) {
+    if (in_array($class, $this->object_map)) {
       fb_graph_require($class, 'object');
       return TRUE;
-  	}
-  	return FALSE;
+    }
+    return FALSE;
   }
 
   //----------------------------------------------------------------------------
@@ -694,7 +694,7 @@ class FbGraph extends LogObject {
     if (is_array($array)) {
       foreach(array_keys($array) as $key => $value) {
         if ($key != $value) {
-         return TRUE;
+          return TRUE;
         }
       }
     }

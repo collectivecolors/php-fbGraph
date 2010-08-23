@@ -80,7 +80,7 @@ class FbAlbum extends FbLinkedResource {
    * Set Facebook user photo album location.
    */
   protected function setLocation($location) {
-  	// TODO: Don't really know what this is?
+    // TODO: Don't really know what this is?
     $this->location = $this->create($location);
   }
 

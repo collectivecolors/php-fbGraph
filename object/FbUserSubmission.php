@@ -52,7 +52,7 @@ abstract class FbUserSubmission extends FbSocialObject {
    * Set Facebook user submission to.
    */
   protected function setTo($to) {
-  	// I believe this can be addressed to non users as well (page?).
+    // I believe this can be addressed to non users as well (page?).
     $this->to = $this->createList($to);
   }
 
@@ -109,8 +109,8 @@ abstract class FbUserSubmission extends FbSocialObject {
    * Retrieve Facebook user submission created time.
    */
   public function getCreatedTime() {
-  	// Not all submission types seem to have a created time but all seem to have
-  	// an updated time.
+    // Not all submission types seem to have a created time but all seem to have
+    // an updated time.
     return ($this->created_time ? $this->created_time : $this->getUpdatedTime());
   }
 

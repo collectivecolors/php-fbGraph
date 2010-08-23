@@ -22,7 +22,7 @@ class FbStatus extends FbUserSubmission {
    * Facebook user status message properties (not all of these are public)
    */
 
-	// Nothing here.  This is basically a vanity class right now.
+  // Nothing here.  This is basically a vanity class right now.
 
   /*****************************************************************************
    * Utilities

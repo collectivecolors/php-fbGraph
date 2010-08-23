@@ -34,7 +34,7 @@ abstract class FbBase extends LogObject {
    */
   public function setConnector(FbGraph $connector) {
     $this->connector = $connector;
-    
+
     if (!is_null($connector)) {
       $this->useLogObject($connector);
     }
@@ -81,11 +81,11 @@ abstract class FbBase extends LogObject {
    * Request more information about an object.
    */
   protected function request($data, $force = FALSE) {
-  	$this->_debug('request()', $data, $force, $this->checkDepth());
+    $this->_debug('request()', $data, $force, $this->checkDepth());
 
     if (($force || $this->checkDepth())
-        && $this->checkAssoc($data)
-        && array_key_exists('id', $data)) {
+    && $this->checkAssoc($data)
+    && array_key_exists('id', $data)) {
 
       $this->_debug('Requesting object...', $data['id'], $this->nextDepth());
 
@@ -104,29 +104,29 @@ abstract class FbBase extends LogObject {
    * We probably only know the id and the name of the object when this is used.
    */
   protected function create($data) {
-  	$this->_debug('create()', $data, $this->nextDepth());
+    $this->_debug('create()', $data, $this->nextDepth());
 
-  	$object = $this->request($data);
-  	$this->_debug('Returning object...', $object);
+    $object = $this->request($data);
+    $this->_debug('Returning object...', $object);
 
-  	return $object;
+    return $object;
   }
 
   /**
    * Create a list of object instances given a list of objects.
    */
   protected function createList($data) {
-  	$this->_debug('createList()', $data);
+    $this->_debug('createList()', $data);
 
     $list = array();
     if (is_array($data) && !$this->checkAssoc($data)) {
       foreach ($data as $object) {
-      	$this->_debug('List item:', $object);
+        $this->_debug('List item:', $object);
         $list[] = $this->create($object);
       }
     }
     else {
-    	$this->_debug('List data');
+      $this->_debug('List data');
       $list[] = $this->create($data);
     }
     $this->_debug('Returning list...', $list);
@@ -148,14 +148,14 @@ abstract class FbBase extends LogObject {
    * Create a new instance of a given object extension class.
    */
   protected function createExtension($class, $data, $check = TRUE) {
-  	$this->_debug('createExtension()', $class, $data, $check);
+    $this->_debug('createExtension()', $class, $data, $check);
 
     if ($check) {
-    	$this->_debug('Checking extension.');
+      $this->_debug('Checking extension.');
       $this->checkExtension($class);
     }
     if (is_array($data) && $this->checkAssoc($data)) {
-    	$this->_debug("Returning new $class...", $this->nextDepth());
+      $this->_debug("Returning new $class...", $this->nextDepth());
       return new $class($data, $this->connector, $this->nextDepth());
     }
     $this->_debug('Returning NULL...');
@@ -166,7 +166,7 @@ abstract class FbBase extends LogObject {
    * Create a list of object extension instances given a list of objects.
    */
   protected function createExtensionList($class, $data) {
-  	$this->_debug('createExtension()', $class, $data);
+    $this->_debug('createExtension()', $class, $data);
 
     $this->checkExtension($class);
 
@@ -174,12 +174,12 @@ abstract class FbBase extends LogObject {
       $list = array();
 
       if ($this->checkAssoc($data)) {
-      	$this->_debug('Creating new extension...', $class);
+        $this->_debug('Creating new extension...', $class);
         $list[] = $this->createExtension($class, $data, FALSE);
       }
       else {
         foreach ($data as $item) {
-        	$this->_debug('List item:', $item);
+          $this->_debug('List item:', $item);
           $list[] = $this->createExtension($class, $item, FALSE);
         }
       }

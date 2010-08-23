@@ -4,7 +4,7 @@
  * Reusable cache entry class.
  */
 class CacheEntry {
-  
+
   /**
    * Constructor.
    *
@@ -16,65 +16,65 @@ class CacheEntry {
     $this->setTime(time());
     $this->setExpiration($expire);
   }
-  
+
   /*****************************************************************************
    * Cache properties.
    */
-  
+
   /**
    * Unique cache id.
    */
   protected $id;
-  
+
   /**
    * Get the current cache id.
    */
   public function getId() {
-    return $this->id; 
+    return $this->id;
   }
-  
+
   /**
    * Set current cache id.
    */
   public function setId($id) {
     $this->id = $id;
   }
-  
+
   //----------------------------------------------------------------------------
-  
+
   /**
    * Cached data.
    */
   protected $data;
-  
+
   /**
    * Get current cached data.
    */
   public function getData() {
-    return $this->data; 
+    return $this->data;
   }
-  
+
   /**
    * Set current cached data.
    */
   public function setData($data) {
     $this->data = $data;
   }
-  
+
   //----------------------------------------------------------------------------
-  
+
   /**
    * Timestamp that this data was cached.
    */
   protected $time;
-  
+
   /**
    * Get cache creation timestamp.
    */
   public function getTime() {
-    return $this->time; 
+    return $this->time;
   }
-  
+
   /**
    * Set cache creation timestamp.
    */
@@ -83,29 +83,29 @@ class CacheEntry {
   }
 
   //----------------------------------------------------------------------------
-  
+
   /**
    * Timestamp that this data will expire.
    */
   protected $expiration;
-  
+
   /**
    * Get cache expiration timestamp.
    */
   public function getExpiration() {
-    return $this->expiration; 
+    return $this->expiration;
   }
-  
+
   /**
    * Set cache expiration timestamp.
    */
   public function setExpiration($expiration) {
     $this->expiration = $expiration;
   }
-  
+
   /**
    * Check if this cache entry has expired.
-   * 
+   *
    * If no expiration has been set, it never expires until deleted.
    */
   public function isExpired() {

@@ -248,7 +248,7 @@ class FbUser extends FbObject {
    * Set Facebook user location.
    */
   protected function setLocation($location) {
-  	$this->location = $this->create($location);
+    $this->location = $this->create($location);
   }
 
   //----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ class FbUser extends FbObject {
    * Set Facebook user work history.
    */
   protected function setWorkHistory($work_history) {
-  	$this->work_history = $this->createExtensionList('FbJob', $work_history);
+    $this->work_history = $this->createExtensionList('FbJob', $work_history);
   }
 
   //----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ class FbUser extends FbObject {
    * Set Facebook user education.
    */
   protected function setEducation($education) {
-  	$this->education = $this->createExtensionList('FbStudy', $education);
+    $this->education = $this->createExtensionList('FbStudy', $education);
   }
 
   //----------------------------------------------------------------------------
@@ -343,23 +343,23 @@ class FbUser extends FbObject {
    * Parse a Facebook user object into our FbUser object.
    */
   public function parse($data) {
-  	parent::parse($data);
+    parent::parse($data);
 
-  	$this->setFirstName($data['first_name']);
-  	$this->setLastName($data['last_name']);
-  	$this->setEmail($data['email']);
-  	$this->setWebsite($data['website']);
-  	$this->setTimezoneOffset($data['timezone']);
-  	$this->setGender($data['gender']);
-  	$this->setBirthday($data['birthday']);
-  	$this->setRelationshipStatus($data['relationship_status']);
-  	$this->setReligion($data['religion']);
-  	$this->setPoliticalAffiliation($data['political']);
-  	$this->setLocation($data['location']);
-  	$this->setHometown($data['hometown']);
-  	$this->setWorkHistory($data['work']);
-  	$this->setEducation($data['education']);
-  	$this->setVerified($data['verified']);
+    $this->setFirstName($data['first_name']);
+    $this->setLastName($data['last_name']);
+    $this->setEmail($data['email']);
+    $this->setWebsite($data['website']);
+    $this->setTimezoneOffset($data['timezone']);
+    $this->setGender($data['gender']);
+    $this->setBirthday($data['birthday']);
+    $this->setRelationshipStatus($data['relationship_status']);
+    $this->setReligion($data['religion']);
+    $this->setPoliticalAffiliation($data['political']);
+    $this->setLocation($data['location']);
+    $this->setHometown($data['hometown']);
+    $this->setWorkHistory($data['work']);
+    $this->setEducation($data['education']);
+    $this->setVerified($data['verified']);
   }
 }
 
@@ -463,10 +463,10 @@ class FbJob extends FbBase {
    * Parse a Facebook object into our class.
    */
   public function parse($data) {
-  	$this->setEmployer($data['employer']);
-  	$this->setPosition($data['position']);
-  	$this->setStartDate($data['start_date']);
-  	$this->setEndDate($data['end_date']);
+    $this->setEmployer($data['employer']);
+    $this->setPosition($data['position']);
+    $this->setStartDate($data['start_date']);
+    $this->setEndDate($data['end_date']);
   }
 }
 

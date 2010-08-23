@@ -38,7 +38,7 @@ class FbPhoto extends FbImageResource {
    * Set Facebook user photo tags.
    */
   protected function setTags($tags) {
-  	// TODO: Find out what the format of tags really is and format it correctly.
+    // TODO: Find out what the format of tags really is and format it correctly.
     $this->tags = $tags;
   }
 

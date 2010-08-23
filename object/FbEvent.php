@@ -101,7 +101,7 @@ class FbEvent extends FbUserCollection {
    * Set Facebook user location.
    */
   protected function setLocation($location) {
-  	// TODO: Not sure if this would ever be a Facebook page yet?
+    // TODO: Not sure if this would ever be a Facebook page yet?
     $this->location = $this->create($location);
   }
 

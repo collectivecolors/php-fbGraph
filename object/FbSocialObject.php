@@ -10,23 +10,23 @@ fb_graph_require('FbObject', 'object', TRUE);
  * Facebook Graph API social base object.
  */
 abstract class FbSocialObject extends FbObject {
-  
+
   /*****************************************************************************
    * Facebook social properties (not all of these are public)
    */
-  
+
   /**
    * Facebook social object likes.
    */
   protected $likes;
-  
+
   /**
    * Retrieve Facebook social object likes.
    */
   public function getLikes() {
     return $this->likes;
   }
-  
+
   /**
    * Set Facebook social object likes.
    */
@@ -37,13 +37,13 @@ abstract class FbSocialObject extends FbObject {
   /*****************************************************************************
    * Utilities
    */
-  
+
   /**
    * Overrides: parent::parse().
    */
   public function parse($data) {
     parent::parse($data);
-    
-    $this->setLikes($data['likes']);  
+
+    $this->setLikes($data['likes']);
   }
 }
